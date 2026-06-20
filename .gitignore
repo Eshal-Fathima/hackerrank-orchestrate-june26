@@ -1,6 +1,7 @@
 # API keys — never commit
 .env
 code/.env
+code/.env
 
 
 # Python
