@@ -14,11 +14,10 @@ client = OpenAI(
     api_key=os.environ["OPENROUTER_API_KEY"],
 )
 
-# Free text models — no vision needed here
 TEXT_MODELS = [
-    "meta-llama/llama-4-maverick:free",
-    "qwen/qwen3-8b:free",
-    "deepseek/deepseek-r1-distill-llama-70b:free",
+    "openai/gpt-oss-120b:free",
+    "google/gemma-4-31b-it:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
 ]
 
 PROMPT = """You are a damage claim parser. Read the support conversation and extract the ACTUAL damage claim.
@@ -54,7 +53,6 @@ def parse_claim(conversation: str) -> dict:
             text = response.choices[0].message.content.strip()
             text = re.sub(r"^```(?:json)?\s*", "", text)
             text = re.sub(r"\s*```$", "", text)
-            # Strip <think> tags from reasoning models
             text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
             result = json.loads(text)
             return {
